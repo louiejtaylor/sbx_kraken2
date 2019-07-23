@@ -1,5 +1,5 @@
 # sbx_kraken2
-This is an extension to the [Sunbeam pipeline](https://github.com/sunbeam-labs/sunbeam) to run the kraken2 read classifier. It works on qc'd reads, and requires that you have a kraken2 database available.
+This is an extension to the [Sunbeam pipeline](https://github.com/sunbeam-labs/sunbeam) to run the kraken2 read classifier. It works on qc'd reads, and requires that you have a kraken2 database available. Check out the [instructions here](https://ccb.jhu.edu/software/kraken2/index.shtml?t=manual#kraken-2-databases) for help with making a kraken2 database.
 
 ## Installing
 
