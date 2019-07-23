@@ -1,14 +1,12 @@
-rule kraken2_paired:
+rule kraken2:
     input:
-        expand(
-            str(QC_FP/'decontam'/'{{sample}}_{rp}.fastq.gz'), 
-            rp = Pairs)
+        expand(str(QC_FP/'decontam'/'{{sample}}_{rp}.fastq.gz'),rp = Pairs)
     output:
         raw = str(CLASSIFY_FP/'kraken2'/'raw'/'{sample}-raw.tsv'),
         summary = str(CLASSIFY_FP/'kraken2'/'{sample}-taxa.tsv')
     params:
-         paired_end = "--paired" if Cfg['all']['paired_end'] else "",
-         db = Cfg["sbx_kraken2"]["db"])
+        db = Cfg["sbx_kraken2"]["db"],
+        paired_end = "--paired" if Cfg['all']['paired_end'] else ""
     threads:
         Cfg["sbx_kraken2"]["threads"]
     conda:
@@ -24,5 +22,5 @@ rule kraken2_paired:
 
 rule all_kraken2:
     input:
-        a = expand(CLASSIFY_FP/'kraken2'/'raw'/'{sample}-raw.tsv', sample = Samples.keys()),
-        b = expand(CLASSIFY_FP/'kraken2'/'{sample}-taxa.tsv', sample = Samples.keys())
+        a = expand(str(CLASSIFY_FP/'kraken2'/'raw'/'{sample}-raw.tsv'), sample = Samples.keys()),
+        b = expand(str(CLASSIFY_FP/'kraken2'/'{sample}-taxa.tsv'), sample = Samples.keys())

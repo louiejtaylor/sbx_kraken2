@@ -25,11 +25,13 @@ sbx_kraken2:
 
 ## Running
 
-Finally, run Sunbeam as usual with your extension's target rule specified:
+Finally, run Sunbeam as usual (with the `--use-conda` flag) with your extension's target rule specified:
 
-    sunbeam run --configfile=sunbeam_config.yml all_kraken2
+    sunbeam run --use-conda --configfile=sunbeam_config.yml all_kraken2
 
-This rule generates output in the following location: `sunbeam_output/annotation/kraken2/`
+The `--use-conda` flag is crucial as it enables running kraken2 in an isolated environment.
+
+This rule generates output in the following location: `sunbeam_output/classify/kraken2/`
 
 ## Contents
 
