@@ -1,0 +1,22 @@
+rule kraken2_paired:
+    input:
+        expand(
+            str(QC_FP/'decontam'/'{{sample}}_{rp}.fastq.gz'), 
+            rp = Pairs)
+    output:
+        str(CLASSIFY_FP/'kraken2'/'raw'/'{sample}-raw.tsv')
+    params:
+         paired_end = "--paired" if Cfg['all']['paired_end'] else "",
+         db = Cfg["sbx_kraken2"]["db"])
+    threads:
+        Cfg["sbx_kraken2"]["threads"]
+    conda:
+        "sbx_kraken2_env.yml"
+    shell:
+        """
+        kraken2 --db {params.db} {params.paired_end} {input} > {output}
+        """
+
+rule all_kraken2:
+    input:
+        expand(CLASSIFY_FP/'kraken2'/'raw'/'{sample}-raw.tsv', sample = Samples.keys())
