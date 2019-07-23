@@ -1,9 +1,9 @@
-rule kraken2_classify:
+rule kraken2_classify_report:
     input:
         expand(str(QC_FP/'decontam'/'{{sample}}_{rp}.fastq.gz'),rp = Pairs)
     output:
         raw = str(CLASSIFY_FP/'kraken2'/'raw'/'{sample}-raw.tsv'),
-        summary = str(CLASSIFY_FP/'kraken2'/'{sample}-taxa.tsv')
+        report = str(CLASSIFY_FP/'kraken2'/'{sample}-taxa.tsv')
     params:
         db = Cfg["sbx_kraken2"]["db"],
         paired_end = "--paired" if Cfg['all']['paired_end'] else ""
@@ -15,7 +15,7 @@ rule kraken2_classify:
         """
         kraken2 --gzip-compressed \
                 --db {params.db} \
-                --report {output.summary} \
+                --report {output.report} \
                 {params.paired_end} {input} \
                 > {output.raw}
         """
